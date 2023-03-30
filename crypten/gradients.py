@@ -1290,3 +1290,27 @@ class AutogradCrossEntropy(AutogradFunction):
         softmax, target = ctx.saved_tensors
         loss_grad = softmax.sub(target)
         return loss_grad.div_(target.size(0)).mul_(grad_output)
+
+
+@register_function("cross_entropy_no_reduction")
+class AutogradCrossEntropy(AutogradFunction):
+    @staticmethod
+    @timer_softmax
+    def forward(ctx, pred, target, skip_forward=False):
+        # NOTE: target is assumed to be one-hot vector.
+        # Hard coded value for testing purpose
+
+        softmax = pred.softmax(1)
+        ctx.save_multiple_for_backward([softmax, target])
+        ctx.mark_non_differentiable(target)
+        if skip_forward:
+            return softmax.new(0)
+
+        # Compute full forward pass
+        loss_values = softmax.log().mul_(target).neg_()
+        return loss_values.sum(dim=1)
+
+    @staticmethod
+    @timer_softmax
+    def backward(ctx, grad_output):
+        raise NotImplementedError

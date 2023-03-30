@@ -81,3 +81,8 @@ class CrossEntropyLoss(_Loss):
     def forward(self, x, y):
         assert x.size() == y.size(), "input and target must have the same size"
         return x.cross_entropy(y, skip_forward=self.skip_forward)
+
+class CrossEntropyLossNoReduction(_Loss):
+    def forward(self, x, y):
+        assert x.size() == y.size(), "input and target must have the same size"
+        return x.cross_entropy_no_reduction(y, skip_forward=self.skip_forward)

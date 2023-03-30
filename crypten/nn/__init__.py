@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 
 
-from .loss import CrossEntropyLoss
+from .loss import CrossEntropyLoss, CrossEntropyLossNoReduction
 from .module import (
     Add,
     AvgPool2d,
@@ -67,6 +67,7 @@ __all__ = [
     "Conv1d",
     "Conv2d",
     "CrossEntropyLoss",
+    "CrossEntropyLossNoReduction",
     # "Dropout",
     # "Dropout2d",
     # "Dropout3d",
