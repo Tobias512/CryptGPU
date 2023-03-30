@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     setuptools.setup(
         name=DISTNAME,
-        install_requires=REQUIREMENTS,
+        #install_requires=REQUIREMENTS,
         packages=setuptools.find_packages(),
         dependency_links=[],
         version=VERSION,
